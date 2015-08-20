@@ -9,6 +9,8 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Instructor extends AbstractUser{
 
+	private static final long serialVersionUID = 6715705207985213370L;
+	
 	@ManyToMany
 	private Set<Course> courses = new HashSet<>();
 

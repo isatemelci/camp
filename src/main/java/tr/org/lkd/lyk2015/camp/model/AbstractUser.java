@@ -1,13 +1,19 @@
 package tr.org.lkd.lyk2015.camp.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @MappedSuperclass
-public abstract class AbstractUser extends AbstractBaseModel {
+public abstract class AbstractUser extends AbstractBaseModel implements UserDetails {
+
+	private static final long serialVersionUID = 6718347138022457445L;
 
 	@NotEmpty
 	private String name;
@@ -86,6 +92,36 @@ public abstract class AbstractUser extends AbstractBaseModel {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 }

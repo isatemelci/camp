@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import tr.org.lkd.lyk2015.camp.model.Application;
 
 @Repository
-public class applicationDao extends GenericDao<Application> {
+public class ApplicationDao extends GenericDao<Application> {
 
 	public Application getByValidationId(String uuid) {
 		Criteria c = this.createCriteria();

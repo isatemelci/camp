@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tr.org.lkd.lyk2015.camp.model.Course;
@@ -24,16 +25,18 @@ public class InstructorService extends GenericService<Instructor> {
 	@Autowired
 	private CourseDao courseDao;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	public void create(Instructor instructor, List<Long> ids) {
 		List<Course> courses = this.courseDao.getByIds(ids);
 		instructor.getCourses().addAll(courses);
+		instructor.setPassword(passwordEncoder.encode(instructor.getPassword()));
 		this.instructorDao.create(instructor);
 	}
 
 	public Instructor getInstructorWithCourses(Long id) {
 		Instructor instructor = this.instructorDao.getByIdWithCourses(id);
-		// Hibernate.initialize(instructor.getCourses());
-
 		return instructor;
 	}
 

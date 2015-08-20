@@ -6,15 +6,16 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tr.org.lkd.lyk2015.camp.model.Application;
 import tr.org.lkd.lyk2015.camp.model.Course;
 import tr.org.lkd.lyk2015.camp.model.Student;
 import tr.org.lkd.lyk2015.camp.model.dto.ApplicationFormDto;
+import tr.org.lkd.lyk2015.camp.repository.ApplicationDao;
 import tr.org.lkd.lyk2015.camp.repository.CourseDao;
 import tr.org.lkd.lyk2015.camp.repository.StudentDao;
-import tr.org.lkd.lyk2015.camp.repository.applicationDao;
 
 @Transactional
 @Service
@@ -33,10 +34,13 @@ public class ApplicationService extends GenericService<Application> {
 	private StudentDao studentDao;
 
 	@Autowired
-	private applicationDao applicationDao;
+	private ApplicationDao applicationDao;
 
 	@Autowired
 	private EmailService emailService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public void create(ApplicationFormDto applicationFormDto) {
 
@@ -60,6 +64,7 @@ public class ApplicationService extends GenericService<Application> {
 		// Check if user exists
 		Student studentFromDb = this.studentDao.getUserByTckn(student.getTckn());
 		if (studentFromDb == null) {
+			student.setPassword(passwordEncoder.encode("1234"));
 			this.studentDao.create(student);
 			studentFromDb = student;
 		}

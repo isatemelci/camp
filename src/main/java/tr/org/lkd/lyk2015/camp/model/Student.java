@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Student extends AbstractUser {
 
+	private static final long serialVersionUID = 874952452972512067L;
+
 	public enum Sex {
 		MALE, FEMALE
 	}

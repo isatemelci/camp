@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import tr.org.lkd.lyk2015.camp.model.Admin;
 import tr.org.lkd.lyk2015.camp.repository.AdminDao;
-import tr.org.lkd.lyk2015.camp.repository.GenericDao;
 
 @Service
 @Transactional
 public class AdminService extends GenericService<Admin> {
-	
+
+	private static final long serialVersionUID = 9010591266519402847L;
 
 	@Autowired
 	private AdminDao adminDao;
