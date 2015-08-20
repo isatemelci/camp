@@ -1,0 +1,17 @@
+<th:block th:fragment="menuLink (url, linkText)">
+	<li th:classappend="${#httpServletRequest.getRequestURI() == #httpServletRequest.getContextPath() + url ? 'active':''}">
+		<a th:href="@{${url}}" th:text="${linkText}">Link text</a>
+	</li>
+</th:block>	
+
+<th:block th:fragment="menuLinkDropdown (menuName, urls, linkTexts)">
+	<li class="dropdown" th:classappend="${ #strings.startsWith(#httpServletRequest.getRequestURI(), #httpServletRequest.getContextPath() + resourceName) ? 'active':''}">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${menuName}">Menu name</span> <span class="caret"></span></a>
+		<ul class="dropdown-menu" th:with="urlList=${#strings.listSplit(urls,',')}">
+			<li th:each="text,status : ${#strings.listSplit(linkTexts,',')}" th:with="url=${urlList[status.index]}" th:classappend="${#httpServletRequest.getRequestURI() == #httpServletRequest.getContextPath() + url ? 'active':''}">
+				<a th:href="@{${url}}" th:text="${text}">Link name</a>
+			</li>
+		</ul>
+	</li>
+
+</th:block>
